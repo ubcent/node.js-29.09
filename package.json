@@ -1,0 +1,28 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "homeworks for nodeJS course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eaonufriychuk/node.js-29.09.git"
+  },
+  "author": "Egor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eaonufriychuk/node.js-29.09/issues"
+  },
+  "homepage": "https://github.com/eaonufriychuk/node.js-29.09#readme",
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "beepbeep": "^1.2.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
