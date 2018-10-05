@@ -11,10 +11,10 @@ rl.question('enter 1 or 0: ', answer => {
     console.log(random);
     if (answer == random) {
         console.log('win');
-        appendLog(`${answer} \\ win \n`);
+        appendLog('win ');
         rl.close();
     } else {
-        appendLog(`${answer} \\ loose \n`);
+        appendLog('loose ');
         console.log('loose');
         rl.close();
     }
@@ -31,4 +31,5 @@ appendLog = (answer) => {
         });
     })
 }
+
 
