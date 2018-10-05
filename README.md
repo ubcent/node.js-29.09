@@ -3,7 +3,7 @@
 1. npm i
 
 ###Простой запуск
-node index.js --file log.txt
+node index.js
 
 ###Запуск с логированием
 node index.js --file log.txt
