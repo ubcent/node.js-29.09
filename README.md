@@ -2,7 +2,7 @@
 ***
 * Содержит один файл headsOrTails.js
 * Статистика игры пишется в файл ./log/log_hORt.txt
-###QUICK START
+### QUICK START
 ```
 npm run hORt
 ```
@@ -21,7 +21,7 @@ npm run hORt
 * При одинаковом счете выигрывает всегда компьютер
 ***
 * Статистика игры пишется в файл ./log/log_BJ.txt
-###QUICK START
+### QUICK START
 ```
 npm run bj
 ```
@@ -29,7 +29,7 @@ npm run bj
 ***
 * Основной файл stat.js
 * Выводит количество проигрышей и выигрышей, а так же общее количество партий
-###QUICK START
+### QUICK START
 ```
 node -r babel-register stat.js -f %filename%
 
