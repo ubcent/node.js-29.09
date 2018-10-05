@@ -1,0 +1,24 @@
+{
+  "name": "hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "head_or_tails.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "random-number": "0.0.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmitry-vs/node.js-29.09.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dmitry-vs/node.js-29.09/issues"
+  },
+  "homepage": "https://github.com/dmitry-vs/node.js-29.09#readme"
+}
