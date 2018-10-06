@@ -42,7 +42,7 @@ class CardDeck {
   }
 
   checkDeck() {
-    if (!this.cards) {
+    if (!this.cards.size) {
       console.log('Колода закончилась');
       process.exit();
     }
