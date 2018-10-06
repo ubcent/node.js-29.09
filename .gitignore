@@ -61,7 +61,7 @@ typings/
 .next
 
 # WebStorm
-.idea/
+.idea
 
 # ApiKey
 /Шеховцов Кирилл Дмитриевич/Lesson - 3/Translate/apikey.js
