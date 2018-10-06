@@ -212,8 +212,6 @@ class Game {
 
         console.log(
             `Игр сыграно: ${games}\n Казино выиграло: ${dillerWin}\n Игроки выиграли: ${playersWin}\n Рейтинг игроков: ${rating.toFixed(1)}%\n`);
-      } else {
-        return dataParse;
       }
     });
   }
