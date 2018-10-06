@@ -59,3 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# WebStorm
+.idea/
+
+# ApiKey
+/Шеховцов Кирилл Дмитриевич/Lesson - 3/Translate/apikey.js
