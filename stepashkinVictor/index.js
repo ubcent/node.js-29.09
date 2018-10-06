@@ -10,13 +10,13 @@ console.log ('Сыграй в "Орел или Решка": введи 1 или 
 
 let computer;//помещаем в переменную значение 1 = 'орел' или 0 = '
 
-let generateNumber = function(){//функция записи в переменную 0 или 1
+setInterval(function(){//функция генерации 0 или 1 каждые полсекунды
 	if (Math.random() > 0.5){
-		computer=1;
+		computer = 1;
 	} else {
-		computer=0;
+		computer = 0;
 	};
-};
+},500);
 
 const readline = require('readline');//подключили модуль для перехвата ввода
 
@@ -25,21 +25,18 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.on('line', (line)=>{//логика программы -здесь мне не хватает опыта, чтобы применить PROMISE или ASYNC\AWAIT,чтобы не вызывать 3 раза generateNumber()
-		if (line==computer && line==1){
-			console.log(line," -ОРЕЛ: ты УГАДАЛ!");
-			logger.log(line,"ОРЕЛ"+",");
-			generateNumber();
-		} else if (line==computer && line==0){
-			console.log(line," -РЕШКА: ты УГАДАЛ!");
-			logger.log(line,"РЕШКА"+",");
-			generateNumber();
-		} else if (line!=0 && line!=1){
-			console.error("Возникла ошибка, видимо ты ввел не 0 и не 1 - попробуй еще раз"+',');
-			logger.log("error :введен неверный символ"+',');
-		} else {
-			console.log(line," -ты ПРОИГРАЛ: КОМП загадал-", computer);
-			logger.log(line,"loss"+',');
-			generateNumber();
-		};
-	});
+rl.on('line', (line)=>{//логика программы 
+	if (line==computer && line==1){
+		console.log(line," -ОРЕЛ: ты УГАДАЛ!");
+		logger.log(line,"ОРЕЛ"+",");
+	} else if (line==computer && line==0){
+		console.log(line," -РЕШКА: ты УГАДАЛ!");
+		logger.log(line,"РЕШКА"+",");
+	} else if (line!=0 && line!=1){
+		console.error("Возникла ошибка, видимо ты ввел не 0 и не 1 - попробуй еще раз"+',');
+		logger.log("error :введен неверный символ"+',');
+	} else {
+		console.log(line," -ты ПРОИГРАЛ: КОМП загадал-", computer);
+		logger.log(line,"loss"+',');
+	};
+});
