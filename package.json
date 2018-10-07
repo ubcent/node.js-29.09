@@ -27,7 +27,9 @@
       "ecmaVersion": 7,
       "sourceType": "module"
     },
-    "extends": ["google"],
+    "extends": [
+      "google"
+    ],
     "rules": {
       "require-jsdoc": 0
     }

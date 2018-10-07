@@ -62,7 +62,6 @@ class CardDeck {
   }
 }
 
-
 class Player {
   constructor(name) {
     this.name = name;
@@ -77,7 +76,6 @@ class Player {
     this.value += value;
   }
 }
-
 
 class Game {
   constructor(player, diller, cardDeck) {
@@ -157,11 +155,6 @@ class Game {
 
     this.saveStat(winner);
 
-    console.log('\n------------');
-    console.log('Статистика:');
-
-    setTimeout(()=>this.getStat(), 10);
-
     return rl.close(), process.stdin.destroy();
   }
 
@@ -190,6 +183,7 @@ class Game {
 
       fs.writeFile('./stat.json', JSON.stringify(saveObj), (err) => {
         if (err) return console.error(err);
+        this.getStat();
       });
     });
   }
@@ -210,8 +204,11 @@ class Game {
         const {games, playersWin, dillerWin} = dataParse;
         const rating = playersWin / games * 100;
 
+        console.log('\n------------');
+        console.log('Статистика:');
         console.log(
-            `Игр сыграно: ${games}\n Казино выиграло: ${dillerWin}\n Игроки выиграли: ${playersWin}\n Рейтинг игроков: ${rating.toFixed(1)}%\n`);
+            `Игр сыграно: ${games}\n Казино выиграло: ${dillerWin}\n Игроки выиграли: ${playersWin}\n Рейтинг игроков: ${rating.toFixed(1)}%\n`
+        );
       }
     });
   }
@@ -223,3 +220,4 @@ const diller = new Player('Диллер');
 
 const game = new Game(player, diller, cardDeck);
 game.start();
+
