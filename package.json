@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/SkutinAnton/node.js-29.09/issues"
   },
-  "homepage": "https://github.com/SkutinAnton/node.js-29.09#readme"
+  "homepage": "https://github.com/SkutinAnton/node.js-29.09#readme",
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.88.0"
+  }
 }
