@@ -18,7 +18,7 @@ needle.get(URL, (err, res) => {
       console.log(`Ссылка на новость: ${rootUrl}${urlPrev}`);
       console.log('***');
     });
-} else {
-  console.log('Ошибка', err, res.statusCode);
+  } else {
+    console.log('Ошибка', err, res.statusCode);
   }
 });
