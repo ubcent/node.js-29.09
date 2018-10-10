@@ -13,7 +13,7 @@ function translation(api, words) {
   request(`${api}&text=${words}&lang=en-ru`, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       const res = JSON.parse(body);
-      res.text.forEach((word) => process.stdout.write(word));
+      console.log(res.text.join(' '));
     }
   });
 }
