@@ -1,0 +1,12 @@
+{
+  "name": "widetracehw2nd",
+  "version": "1.0.0",
+  "description": "HomeWork 2 for GB NodeJS ",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
