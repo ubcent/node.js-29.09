@@ -12,8 +12,19 @@ const api = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${apiKe
 function translation(api, words) {
   request(`${api}&text=${words}&lang=en-ru`, (error, response, body) => {
     if (!error && response.statusCode === 200) {
-      const res = JSON.parse(body);
-      console.log(res.text.join(' '));
+      let res;
+
+      try {
+        res = JSON.parse(body);
+      } catch (e) {
+        return console.log(e);
+      }
+
+      if (res.text) {
+        console.log(res.text.join(' '));
+      } else {
+        console.log('Нет свойства с переводом');
+      }
     }
   });
 }
