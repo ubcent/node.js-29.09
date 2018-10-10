@@ -1,4 +1,4 @@
-# Head or Tails Game :fire:
+# NewsRequest & Translator :fire:
 --------------
 ## What is done :point_down:
 - [x] translator.js - console translator
