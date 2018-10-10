@@ -1,0 +1,26 @@
+{
+  "name": "node.js-29.09",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igor1969/node.js-29.09.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igor1969/node.js-29.09/issues"
+  },
+  "homepage": "https://github.com/igor1969/node.js-29.09#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "needle": "^2.2.4",
+    "readline": "^1.3.0",
+    "request": "^2.88.0"
+  }
+}
