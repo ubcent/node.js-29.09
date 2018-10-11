@@ -1,7 +1,7 @@
 const request = require('request');
 
 const site = 'http://lenta.ru';
-const pattern = /<\/time>(.*?)<\/a>/gm;
+const pattern = /<\/time>(?!<\/div>)(.*?)<\/a>/gm;
 
 function getRequest(site) {
   request(site, (error, response, body) => {
