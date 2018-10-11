@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const request = require('request');
 
@@ -6,9 +7,10 @@ const pattern = /<\/time>(?!<\/div>)(.*?)<\/a>/gm;
 const app = express();
 
 app.set('view engine', 'pug');
+app.set('views', path.resolve(__dirname, 'views'));
 
 function renderIndex(site) {
-  request(site, function(error, response, body) {
+  request(site, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       parse(body, pattern);
     }
