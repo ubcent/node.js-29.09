@@ -1,0 +1,43 @@
+doctype html
+head
+    title Новостной сайт
+    meta(charset='utf-8')
+    style.
+        body {
+            width: 60%;
+            margin: auto;
+        }
+
+        .form {
+            width: 30%;
+        }
+
+body
+    div(class='news')
+        h2= 'Новости: ' + cat
+        ol
+            each val in news
+                li= val
+    div(class='form')
+        form(method='post' action='http://localhost:3000/settings')
+            fieldset
+                legend Настройки
+                p Категория
+                p
+                    select(name='cat')
+                        if sel === 'politics'
+                            option(value='politics' selected) Политика
+                        else
+                            option(value='politics') Политика
+                        if sel === 'society'
+                            option(value='society' selected) Общество
+                        else
+                            option(value='society') Общество
+                        if sel === 'economy'
+                            option(value='economy' selected) Экономика
+                        else
+                            option(value='economy') Экономика
+                p Количество новостей
+                p
+                    input(type='number' min='1' max='30' value=count name='count')
+                input(type='submit' value='Отправить')
