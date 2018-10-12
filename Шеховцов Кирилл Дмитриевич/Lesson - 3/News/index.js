@@ -1,6 +1,5 @@
-const
-    request = require('request'),
-    cheerio = require('cheerio');
+const request = require('request');
+const cheerio = require('cheerio');
 
 request.get('https://www.yandex.ru/', (err, response, body) => {
     if (!err && response.statusCode === 200) {

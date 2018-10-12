@@ -1,4 +1,4 @@
-const ansi = require("ansi");
+const ansi = require('ansi');
 let cursor = ansi(process.stdout);
 
 function beep() {

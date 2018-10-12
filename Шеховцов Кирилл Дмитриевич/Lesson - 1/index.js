@@ -3,11 +3,9 @@ require('./hello');
 require('./hello-npm'); // Модифицировал код промиссом
 
 /* Задание 2 */
-const
-    express = require('express'),
-    app = express();
-
-let port = 3000;
+const express = require('express');
+const app = express();
+const port = 3000;
 
 app.get('/', (req, res) => { // Мне больше нравится использовать Arrow Functions
     res.send('Hello World')
@@ -25,11 +23,9 @@ class CategorizedLogs { // В своих проектах я предпочит�
     error(object) {console.error(`[Error] ${object}`);}
 }
 
-const
-    colors = require('colors/safe'),
-    beep = require('./hello-npm'),
-    beepbeep = require('beepbeep');
-
+const colors = require('colors/safe');
+const beep = require('./hello-npm');
+const beepbeep = require('beepbeep');
 const cat = new CategorizedLogs;
 
 

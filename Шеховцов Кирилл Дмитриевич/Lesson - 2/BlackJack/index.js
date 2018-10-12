@@ -1,18 +1,23 @@
-const
-    rl = require('readline').createInterface({input: process.stdin, output: process.stdout}),
-    fs = require('fs');
+const rl = require('readline').createInterface({input: process.stdin, output: process.stdout});
+const fs = require('fs');
 
-function randInt(min, max) { return Math.round(min - 0.5 + Math.random() * (max - min + 1)); }
+function randInt(min, max) {
+    return Math.round(min - 0.5 + Math.random() * (max - min + 1));
+}
 
-function newLine() { console.log(); }
+function newLine() {
+    console.log();
+}
 
 function scoresOfNum(num) {
-    let titles = ['очко', 'очка', 'очков'];
+    const titles = ['очко', 'очка', 'очков'];
     return titles[(num % 10 === 1 && num % 100 !== 11 ? 0 : num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? 1 : 2)];
 }
 
 function distribution(gameObject, show, amount) {
-    if (!(amount && amount > 0)) {amount = 1;} // Базовое значение
+    if (!(amount && amount > 0)) {
+        amount = 1;
+    } // Базовое значение
     for (let i = 0; i < amount; i++) {
         let rand = randInt(0, cards.length - 1);
         gameObject.inventory.push(cards[rand]);
@@ -38,15 +43,25 @@ function showScores(gameObject) {
 
 function showInventory(gameObject) {
     let str = '';
-    gameObject.inventory.forEach(el => { str += ', ' + el.name; });
+    gameObject.inventory.forEach(el => {
+        str += ', ' + el.name;
+    });
     str = str.slice(2);
-    if (gameObject.type === 'player') { console.log(`Ваши карты: ${str}`); }
-    else if (gameObject.type === 'computer') { console.log(`Карты компьютера: ${str}`); }
+    if (gameObject.type === 'player') {
+        console.log(`Ваши карты: ${str}`);
+    }
+    else if (gameObject.type === 'computer') {
+        console.log(`Карты компьютера: ${str}`);
+    }
 }
 
-function showCardsAmount() { console.log(`Количество карт ${cards.length}`); }
+function showCardsAmount() {
+    console.log(`Количество карт ${cards.length}`);
+}
 
-function checkLoose(gameObject) { return gameObject.scores > 21; }
+function checkLoose(gameObject) {
+    return gameObject.scores > 21;
+}
 
 function checkTwentyOne(gameObject, gameObject1) {
     if (gameObject.scores === 21 && gameObject1 === 21) {
@@ -65,22 +80,25 @@ function checkTwentyOne(gameObject, gameObject1) {
 function checkForAce(gameObject) {
     let bool = false;
     gameObject.inventory.forEach(el => {
-        if (el.name.toLowerCase().includes('туз')) { bool = true; }
+        if (el.name.toLowerCase().includes('туз')) {
+            bool = true;
+        }
     });
     return bool;
 }
 
 function swapAce(gameObject) {
-    let cardNum = 0;
-    for (let i = 0; i < gameObject.inventory.length; i++) {
-        if (gameObject.inventory[i].name.toLowerCase().includes('туз')) {
-            cardNum = i;
-            break;
-        }
-    }
+    let cardIdx = gameObject.inventory.reduce((value, item, index) => {
+       if (item.name.toLowerCase().includes('туз')) {
+           value = index;
+       }
+       return value;
+    });
 
-    gameObject.inventory[cardNum].name += ' (как одно очко)';
-    gameObject.scores -= 10;
+    if (cardIdx) {
+        gameObject.inventory[cardIdx].name += ' (как одно очко)';
+        gameObject.scores -= 10;
+    }
 }
 
 function pickACardComputer() {
@@ -95,7 +113,7 @@ function pickACardComputer() {
                 newLine();
                 showInventory(computer);
                 showScores(computer);
-                fs.appendFileSync("gamelog.txt", "Победил игрок");
+                fs.appendFileSync('gamelog.txt', 'Победил игрок');
                 console.log('Вы победили!');
                 rl.close();
             }
@@ -125,7 +143,7 @@ function pickACardPlayer() {
                     newLine();
                     showInventory(computer);
                     showScores(computer);
-                    fs.appendFileSync("gamelog.txt", "Победил компьютер");
+                    fs.appendFileSync('gamelog.txt', 'Победил компьютер');
                     console.log('Победил компьютер!');
                     rl.close(); // Закрываем ввод
                 }
@@ -133,7 +151,7 @@ function pickACardPlayer() {
                 newLine();
                 showInventory(computer);
                 showScores(computer);
-                fs.appendFileSync("gamelog.txt", "Победил игрок");
+                fs.appendFileSync('gamelog.txt', 'Победил игрок');
                 console.log('Вы победили!');
                 rl.close();
             } else {
@@ -149,7 +167,7 @@ function pickACardPlayer() {
                 newLine();
                 showInventory(computer);
                 showScores(computer);
-                fs.appendFileSync("gamelog.txt", "Победил игрок");
+                fs.appendFileSync('gamelog.txt', 'Победил игрок');
                 console.log('Вы победили!');
                 rl.close();
             } else {
@@ -159,7 +177,7 @@ function pickACardPlayer() {
                 newLine();
                 showInventory(computer);
                 showScores(computer);
-                fs.appendFileSync("gamelog.txt", "Победил компьютер");
+                fs.appendFileSync('gamelog.txt', 'Победил компьютер');
                 console.log('Победил компьютер!');
                 rl.close();
             }
@@ -226,12 +244,11 @@ let cards = [
     {name: 'Туз Бубн', score: 11}
 ];
 
-let
-    player = {type: 'player', inventory: [], scores: 0},
-    computer = {type: 'computer', inventory: [], scores: 0};
+let player = {type: 'player', inventory: [], scores: 0};
+let computer = {type: 'computer', inventory: [], scores: 0};
 
 console.log(`Запуск игры в BlackJack`);
-fs.appendFileSync("gamelog.txt", "\r\nЗапуск игры в BlackJack: ");
+fs.appendFileSync('gamelog.txt', '\r\nЗапуск игры в BlackJack: ');
 showCardsAmount();
 console.log('Раздаём карты');
 newLine();
@@ -252,12 +269,12 @@ newLine();
 if (checkTwentyOne(player, computer) === 'playerWin') {
     showInventory(computer);
     showScores(computer);
-    fs.appendFileSync("gamelog.txt", "Победил игрок");
+    fs.appendFileSync('gamelog.txt', 'Победил игрок');
     console.log('Вы победили!');
 } else if (checkTwentyOne(player, computer) === 'computerWin') {
     showInventory(computer);
     showScores(computer);
-    fs.appendFileSync("gamelog.txt", "Победил компьютер");
+    fs.appendFileSync('gamelog.txt', 'Победил компьютер');
     console.log('Победил компьютер!');
 } else {
     /* Иначе игрок берёт карту */
