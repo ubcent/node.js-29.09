@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title News from TJ
+    link(rel="stylesheet", type="text/css", href="/styles.min.css")
+      
+  body
+    form(action="", method="POST")
+      p Введите в окошке ниже количество новостей, которые хотите вывести на странице
+      input(type="number", name="count")
+    ul 
+      - for (let i = 0; i < count; i++)
+        li= news[i]
