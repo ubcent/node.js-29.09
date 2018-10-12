@@ -1,0 +1,9 @@
+extends layout
+
+block form
+  if ctg
+    ul Вы выбрали следующие категории новостей
+      for i in ctg
+        li= i
+  else
+    p Вы не выбрали ни одной категории
