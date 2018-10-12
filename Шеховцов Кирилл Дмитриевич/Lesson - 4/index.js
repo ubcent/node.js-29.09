@@ -85,7 +85,6 @@ function callRequest(reqEl, res, action) {
 }
 
 app.post('/settings', (req, res) => {
-    delete req.cookies;
     callRequest(req.body, res, 'redirect');
 });
 
