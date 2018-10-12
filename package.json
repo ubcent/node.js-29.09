@@ -18,7 +18,15 @@
   "homepage": "https://github.com/SkutinAnton/node.js-29.09#readme",
   "dependencies": {
     "ansi": "^0.3.1",
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
+    "consolidate": "^0.15.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "cookies": "^0.7.2",
+    "express": "^4.16.3",
+    "handlebars": "^4.0.12",
+    "path": "^0.12.7",
     "request": "^2.88.0"
   }
 }

@@ -1,0 +1,12 @@
+<h1>Онлайн переводчик</h1>
+<form action="http://localhost:3000" method="POST">
+  <textarea name="text" cols="40" rows="10"></textarea>
+    <br>
+  <span>Перевести на:</span>
+  <input type="radio" name="lang" value="en-ru">русский
+  <input type="radio" name="lang" value="ru-en" checked>английский
+  <br><br>
+  <input type="submit" value="Перевести">
+</form>
+<h3>{{ title }}</h3>
+<p>{{ translate }}</p>
