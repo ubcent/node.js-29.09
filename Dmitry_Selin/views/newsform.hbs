@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Новости Яндекса</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Новости Яндекса</h2><hr>
+      <p>Настройки формы заполняются значениями из предыдущего запроса при помощи Cookies.</p>
+      <p>Чтобы задать настройки формы в GET-запросе, нужно указать параметры news_category (country или region)
+      и news_count, например, <em>news_category=country&news_count=5</em>.</p>
+      <p>Если заданы параметры GET и браузером переданы Cookies, то форма заполняется значениями параметров GET.</p>
+      {{#if usingGetParams}}<h3>Настройки взяты из параметров GET-запроса</h3>{{/if}}
+      {{#if usingCookiesParams}}<h3>Настройки взяты из Cookies</h3>{{/if}}
+      <hr><br>
+      <form method="POST">
+        <div>Категория новостей</div><br>
+        <input type="radio" name="news_category" value="country" {{#if newsCategoryCountry}}checked{{/if}}>
+        <span>Страна</span><br>
+        <input type="radio" name="news_category" value="region" {{#if newsCategoryRegion}}checked{{/if}}>
+        <span>Регион</span><br><br><br>
+        <div>Количество новостей (от 1 до 10)</div><br>
+        <input type="text" name="news_count" value="{{newsCount}}"><br><br><br>
+        <input type="submit" value="Отправить"><br><br><hr>
+      </form>
+      {{#if news}}
+        <ul>
+          {{#each news}}
+            <li>{{this}}</li>
+          {{/each}}  
+        </ul>
+      {{/if}}
+      {{#if error}}<p>{{error}}</p>{{/if}}
+    </div>
+  </body>
+</html>
