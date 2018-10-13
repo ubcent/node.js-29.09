@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/ubcent/node.js-29.09#readme",
   "dependencies": {
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.0"
   }
 }

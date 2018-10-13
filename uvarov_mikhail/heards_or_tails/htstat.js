@@ -61,7 +61,7 @@ module.exports = class HtStat {
 			//console.log(this.stat)
 			let data = JSON.stringify(this.stat);
 			//console.log(data)
-			this.fs.writeFileSync(this.path, data);
+			fs.writeFileSync(this.path, data);
             //console.log('File has been written successfully');
         } catch (err) {
             console.log('Error in writing file');
