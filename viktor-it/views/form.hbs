@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Форма для парсинга страниц</title>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script> -->
+</head>
+<body>
+	<h2>Форма для парсинга страниц:</h2>
+	<p style="color:red">*работает только со страницей http://uk.ufc.com/RANKINGS</p>
+	<p style="font-size:3ex">Выберите параметры парсинга страницы:</p>
+	<input id="radio0" type="radio"> Вывести бойца с именем: {{name}} <br>
+	<input id="radio1" type="radio"> Вывести 5 лучших бойцов в легком весе <br>
+	<input id="radio2" type="radio"> Вывести чемпиона в легком весе <br>
+	<input id="radio3" type="radio"> Вывести худшего бойца в легком весе <br><br>
+	<input id="inUrl" type="text" placeholder="Введите URL" style="width:400px">
+	<button id="btnUrl">Отправить</button>
+	<p>{{content}}</p>
+	<br>
+	<!-- ВОТ ЗДЕСЬ Я НЕ ПОНЯЛ КАК ВЫВЕСТИ МАССИВ НА СТРАНИЦУ (см.комментарий в файле parser.js на 30 строке) -->
+	<!-- <div id="listFighters"></div> -->
+<!-- 	<script>
+	  $.each(resParseUrl, function(){$('#listFighters').append(this + '<br>');});
+	</script> -->
+</body>
+</html>
