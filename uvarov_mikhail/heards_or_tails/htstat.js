@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+
 /** Класс бработки и хранения статистики 
  *  игры headsOrTails
  * @class HtStat
@@ -9,12 +11,11 @@ module.exports = class HtStat {
 	
 	constructor() {
     	this.path = './htstat.json';
-    	this.fs = require('fs');
     	this.get();
     }
 	
 	get() {
-		let data = this.fs.readFileSync(this.path);
+		let data = fs.readFileSync(this.path);
 		
 		if (data.length > 0) {
 			this.stat = [];
