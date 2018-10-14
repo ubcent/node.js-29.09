@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Список дел</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="todolist.css">
+  </head>
+  <body>
+      <div class="container">
+        <h3>Добавить новую задачу</h3>
+        <input id="text-task-name" type="text" placeholder="Введите название">
+        <button id="button-add-task">Добавить</button>
+        <h4>Актуальные задачи</h4>
+        <div id="div-tasks-undone"></div>
+        <h4>Завершенные задачи</h4>
+        <div id="div-tasks-done"></div>
+      </div>
+      <script type="text/javascript" src="todolist.js"></script>
+      <script>
+        window.onload = renderTasks({{{tasks}}});
+      </script>
+  </body>
+</html>

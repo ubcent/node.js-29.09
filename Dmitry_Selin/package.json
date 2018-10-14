@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "handlebars": "^4.0.12",
     "minimist": "^1.2.0",
+    "mongoose": "^5.3.3",
     "random-number": "0.0.9",
     "request": "^2.88.0"
   },
