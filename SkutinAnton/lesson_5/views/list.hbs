@@ -1,0 +1,32 @@
+<form action="http://localhost:3000" method="POST">
+  <label>Новая задача:</label>
+  <input type="text" name="task" placeholder="купить хлеб, помыть посуду...">
+  <input type="submit" value="Добавить">
+</form>
+<h3>Список дел</h3>
+<ul>
+  {{#each todoList}}
+  <li>
+    <button id={{ _id }} onclick="remove(this.id)">х</button>
+    {{ name }}
+  </li>
+  {{/each}}
+</ul>
+
+<script>
+  const remove = (id) => {
+    fetch('/', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+      body: JSON.stringify({ id: id })
+    })
+    .then(res => {
+      return res.text();
+    })
+    .then(res => {
+      document.body.innerHTML = res;
+    });
+  }
+</script>
