@@ -1,3 +1,35 @@
 body {
-  background-color: bisque;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+}
+.todo {
+  width: 800px;
+  display: flex;
+  margin: 0 auto;
+  border: 1px solid black;
+  flex-direction: column;
+}
+
+.todo__title {
+  text-align: center;
+}
+
+.todo-add {
+  align-self: center;
+  margin: 10px 0 10px 0;
+}
+
+#todo-list {
+  max-width: 300px;
+  margin: 0 auto;
+  list-style: none;
+  border-top: 1px solid lightgray;
+  padding: 0;
+}
+
+.todo-list__item.done {
+  color: gray;
+  text-decoration: line-through;
 }

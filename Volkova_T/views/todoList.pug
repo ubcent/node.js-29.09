@@ -1,0 +1,88 @@
+extends layout
+
+block todo
+  script.
+    function handleClick(event) {
+      var id = event.currentTarget.id;
+      var action = event.target.className;
+      var button = event.target;
+
+      if (action === 'delete') {
+        deleteTodo(id);
+      }
+      if (action === 'edit') {
+        createEditForm(id);
+        button.innerHTML = 'Сохранить';
+        button.className = 'save';
+        event.preventDefault();
+      }
+      if (action === 'save') {
+        var editTitle = document.getElementById('editField').value;
+        button.innerHTML = 'Редактировать';
+        button.className = 'edit';
+        editTodo(id, editTitle);
+      }
+      if (action === 'done') {
+        updateDone(id, false);
+      } else {
+        updateDone(id, true);
+      }
+    }
+
+    function deleteTodo(id) {
+      fetch('/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ _id: id})
+      });
+    };
+
+    function editTodo(id, editTitle) {
+      fetch('/edit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ _id: id, title: editTitle })
+      });
+     };
+
+    function updateDone(id, status) {
+      fetch('/updateDone', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ _id: id, done: status })
+      });
+    };
+
+    function createEditForm(id) {
+      var editField = document.getElementById(id);
+      var form = document.createElement('form');
+      form.setAttribute('action', '/edit');
+      form.setAttribute('method', 'post');
+      form.setAttribute('id', 'form-edit');
+      var input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('id', 'editField');
+      return editField.appendChild(form).appendChild(input);
+    }
+
+  div.todo
+    h1.todo__title Список задач
+    form.todo-add(action="/add" method="post")
+      input(type=text name="item" placeholder="Добавить задачу")
+      input(type="submit" value="Отправить")
+    if todos
+      div#todo-list
+        for todo in todos
+          div(id= todo.id onClick="handleClick(event)")
+            a(href="./todoList" class= todo.done ? 'done' : 'not-done') &#10003;
+            span.todo-list__item(class={ "done": todo.done })= todo.title
+            a(href="./todoList" class="delete") Удалить
+            a(href="./todoList" class="edit") Редактировать
+    else
+      p Нет задач для выполнения

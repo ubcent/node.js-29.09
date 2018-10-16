@@ -1,66 +1,65 @@
-const path = require('path');
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
-const parseNewsYandex = require('./parse');
-
-// json с категориями для новостей
-const data = require('./data');
+const config = require('./Config');
+const Todo = require('./Todo');
 
 const app = express();
 
-app.use(cookieParser());
-
 app.set('view engine', 'pug');
 
-app.use(express.static(path.resolve(__dirname, 'public')));
+mongoose.connect(config.DB, { useNewUrlParser: true }, err => {
+  if (err) console.log('Ошбика подключения БД');
+});
 
+app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-  // устанавливаем переменную для куки, что бы потом передать ее в pug шаблон
-  let cookies;
-
-  // Если нужна нам кука есть то приводим ее к массиву, если надо
-  if (req.cookies.categories) {
-    cookies = req.cookies.categories;
-    if (typeof(cookies) === 'string') {
-      cookies = cookies.split();
-    }
-  }
-
-  // Отрисовываем индекс, передаем в него нужные параметры (заголовок, категории, куки)
   res.render('index', {
-    title: 'Отправка формы',
-    categories: data.categories,
-    cookies: cookies
+    title: 'Начало работы'
   });
 });
 
-app.post('/form', (req, res) => {
-  if (!req.body) return res.sendStatus(400);
-
-  // Устанавливаем переменную для полученных категорий из формы
-  let ctg = req.body.categories;
-
-  // Если в переенной что-то есть, то устанавливаем куки, и приводим категории к массиву, если надо
-  if (ctg) {
-    res.cookie('categories', ctg);
-    if (typeof(ctg) === 'string') {
-      ctg = ctg.split();
-    }
-
-    // Парсим новости с нужными нам категориями
-    // todo тут я не знаю как вывести список новостей, например в /form
-    parseNewsYandex(ctg);
-  }
-
-  // Отвечаем серверу и выводим список выбранных категорий
-  res.render('form', {
-      ctg,
-    }
-  )
+// Отобразить все задачи
+app.get('/todoList', async (req, res) => {
+  const todos = await Todo.find();
+  res.render('todoList', {
+    todos
+  });
 });
 
-app.listen(3000, () => console.log('server work'));
+// Добавить задачу
+app.post('/add', (req, res) => {
+  Todo.create({ title: req.body.item });
+  res.redirect('/todoList');
+});
+
+// Удалить задачу
+app.post('/delete', (req, res) => {
+  Todo.deleteOne({ _id: req.body._id }, err => {
+    if (err) console.log('Ошбика БД, задачу не удалили');
+    res.redirect('/todoList');
+  });
+});
+
+// Редактировать задачу
+app.post('/edit', (req, res) => {
+  Todo.findOneAndUpdate({ _id: req.body._id }, { $set: { title: req.body.title } }, err => {
+    if (err) console.log('Ошбика БД, задачу не обновили');
+    res.redirect('/todoList');
+  });
+});
+
+// Изменить статус задачи
+app.post('/updateDone', (req, res) => {
+  Todo.findOneAndUpdate({ _id: req.body._id }, { $set: { done: req.body.done } }, err => {
+    if (err) console.log('Ошбика БД, статус задачи не обновлен');
+    res.redirect('/todoList');
+  });
+});
+
+app.listen(config.APP_PORT, () => console.log('server work'));

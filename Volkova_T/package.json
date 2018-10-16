@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Bredik",
   "version": "1.0.0",
   "description": "node.js",
   "main": "index.js",
@@ -11,10 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cheerio": "^1.0.0-rc.2",
-    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
-    "needle": "^2.2.4",
+    "mongoose": "^5.3.3",
     "pug": "^2.0.3"
   },
   "devDependencies": {
