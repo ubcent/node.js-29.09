@@ -1,0 +1,19 @@
+doctype html
+html(lang="ru")
+  head
+    title= title
+    link(rel="stylesheet" href="main.css")
+  body
+    h1= title
+    main
+      section
+        h2 Добавьте задачу
+        form#todoForm
+          label(for="todo") Задача (От 1 до 42) -
+          | &nbsp;
+          input#todo(type="text" name="todo" size="24" maxlength="42" required)
+          | &nbsp;
+          button#submitButton(type="submit") Добавить
+        .loader
+        ul#todoList
+  script(src="index.js")
