@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title ToDo List
+    //- link(rel="stylesheet", type="text/css", href="/styles.css")
+      
+  body
+    form(action="", method="POST")
+      h2 Добавить еще одно дело!
+      p Заголовок
+      input(type="text", name="title")
+      br 
+      p Описание
+      input(type="text", name="text")
+      br
+      input(type="submit")
+    hr 
+    ul 
+      each val in list 
+        li= val.title
+          ul
+            li= val.text
+          if !val.status
+            button(data-id=val.id, class="buttonDone")= 'Выполнено'
+          button(data-id=val.id, class="buttonDel")= 'Удалить'
+    script(src="./buttonDone.js")
+    script(src="./buttonDel.js")
