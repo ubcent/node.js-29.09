@@ -8,9 +8,6 @@ const app = express();
 
 db.setUpConnection();
 
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
 app.use(express.static('assets'));
 app.use(bodyParser.json());
 

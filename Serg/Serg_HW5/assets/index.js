@@ -50,7 +50,7 @@ function init() {
         then(status).
         then((response) => response.json()).
         then((data) => {
-          this.classList.toggle('complete');
+          if (data.status === todoStatus) this.classList.toggle('complete');
         }).catch((error) => {
           alert('Запрос неудачен', error);
         });
