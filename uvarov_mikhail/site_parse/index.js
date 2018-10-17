@@ -55,14 +55,11 @@ function del_spaces(str) {
   return str; 
 }
 
-function parsePrice(price) {
-	
-	price = price.toString().replace(/\руб./g, '');	
-	price = del_spaces(price);
-	
-	if (price.length == 0 || price == 0) {
-		return 0;
-	}
-	
-	return parseFloat(price);
+function parsePrice(price) {	
+  price = price.toString().replace(/\руб./g, '');	
+  price = del_spaces(price);
+  if (price.length == 0 || price == 0) {
+	return 0;
+  }	
+  return parseFloat(price);
 }
