@@ -29,7 +29,6 @@ app.post('/todos', (req, res) => {
 
 app.patch('/todos', (req, res) => {
   const {id, todoStatus} = req.body;
-
   db.toDoComplete(id, todoStatus).then((data) => res.send(data));
 });
 

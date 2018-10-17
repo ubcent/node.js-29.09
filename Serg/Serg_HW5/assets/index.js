@@ -67,6 +67,7 @@ function init() {
       this.disabled = false;
       return;
     }
+    
     fetch('/todos', {
       method: 'POST',
       headers: {
