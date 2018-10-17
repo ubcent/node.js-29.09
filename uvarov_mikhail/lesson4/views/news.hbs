@@ -1,0 +1,54 @@
+<h1>Новости</h1>
+
+{{#if news}}
+<ul id="news">
+  {{#each news}}
+  <li>
+    <h3>{{title}}</h3>
+    <p>{{description}}</p>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>Новостей пока нет</p>
+{{/if}}
+
+<form method="POST">
+  <input id="count" name="count" type="text" value="4" />
+  <input id="send" type="submit" value="Получить" />
+</form>
+
+<script>
+  var $button = document.getElementById('send');
+  var $count = document.getElementById('count');
+  var $news = document.getElementById('news');
+  
+  $button.addEventListener('click', function(event) {
+    event.preventDefault();
+    fetch('/news', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ count: +$count.value })
+    }).then(function(response) {
+      return response.json();
+    }).then(function(news) {
+      $news.textContent = '';
+      news.forEach(function(item) {
+        var $li = document.createElement('li');
+        var $p = document.createElement('p');
+        var $h3 = document.createElement('h3');
+        
+        $h3.textContent = item.title;
+        $p.textContent = item.description;
+        
+        $li.appendChild($h3);
+        $li.appendChild($p);
+        
+        $news.appendChild($li);
+      });
+    });
+    
+  });
+</script>
