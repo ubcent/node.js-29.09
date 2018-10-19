@@ -2,6 +2,7 @@ var $buttonAddTask = document.getElementById('button-add-task');
 $buttonAddTask.onclick = addNewTaskHandler;
 var $divTasksDone = document.getElementById('div-tasks-done');
 var $divTasksUndone = document.getElementById('div-tasks-undone');
+var $buttonLogout = document.getElementById('button-logout');
 
 function renderTasks(tasks){
   $divTasksDone.innerHTML = '';
@@ -88,4 +89,19 @@ function taskDoneHandler(event){
 function taskUndoneHandler(event){
   var id = event.target.parentElement.getAttribute('id');
   requestBackend({action: 'taskUndone', id});
+}
+
+$buttonLogout.onclick = function() {
+  var url = 'http://localhost:3000/todo';
+  var options = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({action: 'logout'}),
+  };
+
+  fetch(url, options)
+  .then(() => window.location.reload(true));
 }

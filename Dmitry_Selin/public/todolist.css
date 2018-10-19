@@ -7,6 +7,24 @@
   margin: 0 auto;
 }
 
+#header{
+  display: flex;
+}
+
+#new-task{
+  width: 70%;
+}
+
+#user-info{
+  width: 30%;
+  margin-top: 15px;
+  text-align: right;
+}
+
+#user-info span{
+  margin-right: 10px;
+}
+
 #text-task-name{
   width: 500px;
 }

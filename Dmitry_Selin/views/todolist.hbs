@@ -7,9 +7,17 @@
   </head>
   <body>
       <div class="container">
-        <h3>Добавить новую задачу</h3>
-        <input id="text-task-name" type="text" placeholder="Введите название">
-        <button id="button-add-task">Добавить</button>
+        <div id="header">
+          <div id="new-task">
+            <h3>Добавить новую задачу</h3>
+            <input id="text-task-name" type="text" placeholder="Введите название">
+            <button id="button-add-task">Добавить</button>
+          </div>
+          <div id="user-info">
+            <span>Вы вошли как: {{user}}</span>
+            <button id="button-logout">Выход</button>
+          </div>
+        </div>
         <h4>Актуальные задачи</h4>
         <div id="div-tasks-undone"></div>
         <h4>Завершенные задачи</h4>
