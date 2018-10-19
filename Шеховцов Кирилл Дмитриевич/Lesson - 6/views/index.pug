@@ -1,0 +1,90 @@
+doctype html
+head
+    title ToDo
+    meta(charset='utf-8')
+    style.
+        body {
+            width: 50%;
+            margin: auto;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        form > * {
+            margin-left: 10px;
+        }
+
+        .todo-add {
+            margin: 10px;
+        }
+
+        .todo {
+            border: 1px solid;
+            margin: 10px;
+            padding: 10px;
+            min-width: 300px;
+            max-width: 300px;
+            float: left;
+        }
+
+        .todo input {
+            width: 100%;
+        }
+
+        .todo button {
+            margin-left: 10px;
+        }
+body
+    div(class="todo-add")
+        form
+            label Добавить задачу
+            input(id="text-input" type="text" placeholder="Название задачи")
+            input(id="send-input" type="submit" value="Добавить")
+
+    div(class="todo-list")
+        each val, num in todolist
+            div(class="todo" id=val._id)
+                button(class="delete") Удалить
+                button(class="update") Обновить
+                p= (num + 1) + '.'
+                input(type="text" placeholder="Название задачи" value= val.name)
+                p(class="created")= val.created.toISOString()
+
+script(src="http://code.jquery.com/jquery-3.3.1.min.js")
+script(src="http://momentjs.com/downloads/moment-with-locales.min.js")
+script.
+    const href = `${window.location.protocol}//${window.location.host}/`;
+    moment.locale('ru');
+    $(() => {
+        $('.todo-list .todo').each((i, el) => {
+            const id = $(el).attr('id');
+            $(el).children('.delete').on('click', () => {
+                $.post(href + 'delete', {_id: id});
+                location.reload();
+            });
+
+            $(el).children('.update').on('click', () => {
+                const $input = $(el).children('input');
+                const newName = $input.val();
+                if (newName) {
+                    $.post(href + 'update', {name: newName, _id: id});
+                    location.reload();
+                }
+            });
+        });
+
+        $('.todo-list .todo .created').each((i, el) => {
+            const elDate = moment($(el).text());
+            $(el).text('Создано ' + moment(elDate).fromNow());
+        });
+
+        $('#send-input').on('click', () => {
+            const inputValue = $('#text-input').val();
+            if (inputValue) {
+                $.post(href + 'create', {name: inputValue});
+                location.reload();
+            }
+        });
+    });

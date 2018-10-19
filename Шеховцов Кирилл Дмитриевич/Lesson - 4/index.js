@@ -16,17 +16,8 @@ app.engine('pug', consolidate.pug);
 app.set('view engine', 'pug');
 
 function callRequest(reqEl, res, action) {
-    function checkCat(cat) {
-        switch (cat) {
-            case 'politics':
-                return true;
-            case 'society':
-                return true;
-            case 'economy':
-                return true;
-            default:
-                return false;
-        }
+    function checkCategory(cat) {
+        return cat === 'politics' || cat === 'society' || cat === 'economy';
     }
 
     function catName(cat) {
@@ -40,7 +31,7 @@ function callRequest(reqEl, res, action) {
         }
     }
 
-    if (!checkCat(reqEl.cat)) {
+    if (!checkCategory(reqEl.cat)) {
         reqEl.cat = 'politics';
     }
 
@@ -50,10 +41,10 @@ function callRequest(reqEl, res, action) {
             if (!err && response.statusCode === 200) {
                 let array = [];
                 let $ = cheerio.load(body);
-                let data = $('.l-main-column .b-lists-wr .b-list-normal .b-list').html();
+                const data = $('.l-main-column .b-lists-wr .b-list-normal .b-list').html();
                 $ = cheerio.load(data);
-                $('.b-list__item').each((i, el) => {
-                    const $$ = cheerio.load(el);
+                $('.b-list__item').each((i, item) => { // map попробовал, тогда .text() не работает
+                    const $$ = cheerio.load(item);
                     array.push($$('.b-list__item-title span').text());
                 });
 
