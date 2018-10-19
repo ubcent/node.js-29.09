@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title Auth test
+  body
+    if auth 
+      p This text can see only wizards!
+    p This text for normal peoples 
+    if !auth
+      a(href="./auth") Authenticate
