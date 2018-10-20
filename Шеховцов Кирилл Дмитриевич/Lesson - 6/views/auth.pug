@@ -1,0 +1,30 @@
+doctype html
+head
+    title Auth
+    meta(charset='utf-8')
+    style.
+        body {
+            width: 50%;
+            margin: auto;
+        }
+
+        form {
+            text-align: center;
+            position: relative;
+            top: 50px;;
+        }
+
+        form > * {
+            margin-left: 10px;
+        }
+
+body
+    form(action="/login" method="post")
+        div
+            label Username:
+            input(type="text" name="username" value="admin")
+        div
+            label Password:
+            input(type="password" name="password" value="12345")
+        div
+            input(type="submit" value="Log In")

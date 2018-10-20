@@ -1,0 +1,11 @@
+{
+  "name": "headsandtails",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kirill Shekhovtsov <ksedline@gmail.com>",
+  "license": "ISC"
+}

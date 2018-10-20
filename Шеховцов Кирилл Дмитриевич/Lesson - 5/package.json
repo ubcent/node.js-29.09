@@ -1,0 +1,19 @@
+{
+  "name": "lesson5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kirill Shekhovtsov",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "consolidate": "^0.15.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.3",
+    "pug": "^2.0.3"
+  }
+}
