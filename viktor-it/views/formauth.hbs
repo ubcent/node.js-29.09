@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Форма для парсинга страниц</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+	<h2>Форма для ввода логина и пароля:</h2>
+	<form action="/auth" method="POST">
+	  <input type="text" id="login" name="username" placeholder="логин"><br><br>
+	  <input type="text" id="pass" name="password" placeholder="пароль"><br><br>
+	  <input id="btn" type="button" value="Отправить">
+	</form>
+	<br>
+	<br>
+	</div>
+	<div id="logpass"></div>
+	<script>
+	  var $button = document.getElementById('btn');
+	  var $login = document.getElementById('login');
+	  var $pass = document.getElementById('pass');
+	  var $logpass = document.getElementById('logpass');
+
+	  $button.addEventListener('click', function(event) {
+	    fetch('/auth', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json',
+	      },
+	      body: JSON.stringify({ username: $login.value, password: $pass.value}),
+	    }).then(function(response) {
+	        return response.json(`${request.body.login}, ${request.body.pass}`);
+	    }).then(function(logpass){
+	      console.log(logpass);
+	    });
+	    event.preventDefault();
+	  });
+	</script>
+</body>
+</html>
