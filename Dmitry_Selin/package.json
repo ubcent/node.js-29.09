@@ -13,6 +13,7 @@
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
+    "connect-ensure-login": "^0.1.1",
     "consolidate": "^0.15.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
@@ -21,6 +22,8 @@
     "handlebars": "^4.0.12",
     "minimist": "^1.2.0",
     "mongoose": "^5.3.3",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0",
     "random-number": "0.0.9",
     "request": "^2.88.0"
   },
