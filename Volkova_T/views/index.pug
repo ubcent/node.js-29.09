@@ -1,19 +1,4 @@
 extends layout
 
-block form
-  // todo как отметить чекбоксы на основании кук, так и не придумала
-  if cookies
-    p ваши куки
-    p= cookies
-
-  // В случае, если параметр categories передан, то отрисовываем форму
-  if categories
-    form(action="/form" method="post")
-      input(type='submit' value='Отправить')
-      br
-      for name in categories
-        label= name
-        input(type='checkbox' name='categories' value= name)
-        br
-  else
-    p Список не передан
+block index
+  h1 TODO LIST
