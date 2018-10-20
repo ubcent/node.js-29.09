@@ -1,0 +1,15 @@
+<div>
+ <form action="http://localhost:3000/news" method="post">
+  <p><b>Какие новости вы хотите увидеть?</b></p>
+  <input type="text" name="count" value="">Количество<Br>
+  <p><input type="radio" name="answer" value="a1">Экономика<Br>
+  <input type="radio" name="answer" value="a2">Общество<Br>
+  <input type="radio" name="answer" value="a3">Политика</p>
+  <p><input type="submit"></p>
+ </form>
+ <div>
+ {{#each news}}
+ <div>{{this}}</div>
+ {{/each}}
+ </div>
+</div>
