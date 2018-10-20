@@ -1,0 +1,14 @@
+<link rel="stylesheet" type="text/css" href="form.css">
+<form id="app-form" action="/form" method="post" enctype="multipart/form-data">
+    <label for="site">Sites</label>
+    <select id="site" name="site" value="{{site}}">
+        <option>Wixoss</option>
+        <option>Surrender</option>
+    </select>
+    <label for="number">Number of news</label>
+    <input type="number" name="number" id="number" max="10" min="1" value="{{number}}">
+	<label for="date">Dont show news before: </label>
+	<input type="date" name="date" id="date" value="{{date}}">
+	<button>Show news</button>
+</form>
+<div id="output">{{output}}</div>
