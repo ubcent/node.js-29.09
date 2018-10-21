@@ -1,0 +1,39 @@
+<div><input type="text" id="toDoAddText"><button onClick = "addData(this)">Добавить задание</button></div>
+<div id="posts">
+{{#each todo}}
+ <div idpost = {{this.id}}>{{this.post}}<button onClick = "deletePost(this)">Выполнено</button></div>
+{{/each}}
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+</script>
+<script>
+        function addData(elem){
+            console.log(elem.parentNode);
+            const textPost = {post: $("#toDoAddText").val()};
+            $.ajax({
+                type: "POST",
+                url: "/newpost",
+                data: textPost,
+                success: (data)=>{
+                    $("#posts").append(`<div idpost=${JSON.parse(data).id}>${textPost.post}</div>`);
+                    $("#toDoAddText").val("");
+                }
+            })
+        };
+        function deletePost(elem){
+            console.log(elem.parentNode);
+            const textPost = {idPost: elem.};
+            $.ajax({
+                type: "POST",
+                url: "/newpost",
+                data: textPost,
+                success: (data)=>{
+                    $("#posts").append(`<div idpost=${JSON.parse(data).id}>${textPost.post}</div>`);
+                    $("#toDoAddText").val("");
+                }
+            })
+        };
+</script>
