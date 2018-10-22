@@ -11,38 +11,9 @@ app.engine('hbs', consolidate.handlebars);
 app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, 'views'));
 
-const Task = require('./models/task');
 const User = require('./models/user');
 mongoose.connect('mongodb://localhost/todolist', { useNewUrlParser: true, useCreateIndex: true });
-
-class TodoList{
-  static async addTask(name){
-    await (new Task({name})).save();
-  }
-
-  static async deleteTask(id){
-    await Task.deleteOne({_id : id});
-  }
-  
-  static async markTaskDone(id){
-    await Task.updateOne(
-      {_id: id}, 
-      {$set: {done: true, updatedAt: new Date()}}
-    );
-  }
-
-  static async markTaskUndone(id){
-    await Task.updateOne(
-      {_id: id}, 
-      {$set: {done: false, updatedAt: new Date()}}
-    );
-  }
-
-  static async getTasks(){
-    const tasks = await Task.find();
-    return tasks;
-  }
-}
+const TodoList = require('./helpers/todolist')
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
