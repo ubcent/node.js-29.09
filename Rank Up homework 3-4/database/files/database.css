@@ -1,0 +1,15 @@
+.database {
+    margin: 0 auto 20px; 
+    width: 500px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+#output {
+    width: 800px;
+    min-height: 50px;
+    max-height: 600px;
+    overflow-y: scroll;
+    margin: 0 auto;
+    border: 2px solid #000000;
+    white-space: pre-wrap;
+}

@@ -1,0 +1,30 @@
+<link rel="stylesheet" type="text/css" href="database.css">
+<div class="database">
+    <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
+        <label for="add">Добавить запись</label>
+    	<input type="text" name="add" id="add">
+    	<button>Добавить</button>
+    </form>
+    <form id="search-form" action="/search" method="get" enctype="multipart/form-data">
+        <label for="search">Найти записи</label>
+        <input type="text" name="search" id="search" placeholder="свойство">
+        <input type="text" name="search_what" id="search_what" placeholder="значение">
+        <button>Найти</button>
+    </form>
+    <form id="show-all" action="/show" method="get" enctype="multipart/form-data">
+        <button>Показать базу данных</button>
+    </form>
+    <form id="change-form" action="/update" method="post" enctype="multipart/form-data">
+        <label for="change">Изменить запись</label>
+        <input type="text" name="change" id="change">
+        <label for="change-to"></label>
+        <input type="text" name="change-to" id="change-to">
+        <button>Изменить</button>
+    </form>
+    <form id="delete-form" action="/delete" method="post" enctype="multipart/form-data">
+        <label for="delete">Удалить запись</label>
+        <input type="text" name="delete" id="delete">
+        <button>Удалить</button>
+    </form>
+</div>
+<div id="output">{{output}}</div>
