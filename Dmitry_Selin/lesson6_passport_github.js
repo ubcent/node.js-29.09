@@ -1,15 +1,15 @@
+const mongoose = require('mongoose');
 const express = require('express');
-const passport = require('passport');
 const bodyParser = require('body-parser');
 const consolidate = require('consolidate');
-const session = require('express-session');
 const path = require('path');
-const mongoose = require('mongoose');
-const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+const passport = require('passport');
+const passportGithubStrategy = require('passport-github').Strategy;
 
 const TodoList = require('./helpers/todolist')
-const User = require('./models/user');
 mongoose.connect('mongodb://localhost/todolist', { useNewUrlParser: true, useCreateIndex: true });
+const GitHubApiCredentials = require('./github_api_keys');
 
 const app = express();
 app.engine('hbs', consolidate.handlebars);
@@ -21,29 +21,26 @@ app.use(express.static('./public'));
 
 app.use(session({
   secret: 'secret',
-  resave: false,
-  saveUninitialized: false
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use('local', new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
+const githubAuthUrl = '/login/github';
+const githubCallbackUrl = '/login/github/callback';
+
+passport.use('github', new passportGithubStrategy({
+    clientID: GitHubApiCredentials.GithubClientId,
+    clientSecret: GitHubApiCredentials.GitHubClientSecret,
+    callbackURL: githubCallbackUrl,
   }, 
-  async (username, password, done) => {
-    const user = await User.findOne({name: username});
-    if(!user) {
-      return done(null, false);
-    }
-    const correctPassword = await user.checkPassword(password);
-    if(!correctPassword) {
-      return done(null, false);
-    }
-    return done(null, {username});
-  })
-);
+  function(accessToken, refreshToken, profile, done) {
+    const user = {username: profile.username};
+    return done(null, user);
+  }
+));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -54,12 +51,14 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 app.get('/login', (req, res) => {
-  res.sendFile(__dirname + '/public/login.html');
+  res.sendFile(__dirname + '/public/login-github.html');
 });
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/todo',
+app.get(githubAuthUrl, passport.authenticate('github'));
+
+app.get(githubCallbackUrl, passport.authenticate('github', {
   failureRedirect: '/login',
+  successRedirect: '/todo',
 }));
 
 const mustBeAuthenticated = (req, res, next) => {
