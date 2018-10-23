@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const passport = require('passport');
@@ -7,6 +8,8 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const app = express();
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(session({keys: ['secret']}));
 
 app.use(passport.initialize());
