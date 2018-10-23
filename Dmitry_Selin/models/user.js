@@ -16,10 +16,9 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.methods.checkPassword = function(password, cb) {
-  bcrypt.compare(password, this.passwordHash, (err, res) => {
-    cb(res ? true : false);
-  });
+UserSchema.methods.checkPassword = async function(password) {
+  const correct = await bcrypt.compare(password, this.passwordHash);
+  return correct;
 }
 
 module.exports = mongoose.model('User', UserSchema);
