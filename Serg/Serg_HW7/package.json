@@ -1,0 +1,47 @@
+{
+  "name": "serghw1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xDiezz/nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xDiezz/nodejs/issues"
+  },
+  "homepage": "https://github.com/xDiezz/nodejs#readme",
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-google": "^0.10.0"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "extends": [
+      "google"
+    ],
+    "rules": {
+      "require-jsdoc": 0
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "express-jwt-permissions": "^1.2.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.3",
+    "pug": "^2.0.3"
+  }
+}
