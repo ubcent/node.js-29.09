@@ -5,9 +5,10 @@
   <meta charset="utf-8">
 </head>
 <body>
-  <input id="input-username" type="text" placeholder="Введите логин">
-  <input id="input-password" type="password" placeholder="Введите пароль">
+  <input id="input-username" name="username" type="text" placeholder="Введите логин">
+  <input id="input-password" name="password" type="password" placeholder="Введите пароль">
   <button id="button-login">Войти</button>
+
   <script>
     var $buttonLogin = document.getElementById('button-login');
     var $inputUsername = document.getElementById('input-username');
@@ -24,9 +25,10 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({username, password}),
+        redirect: 'follow',
       };
       fetch(url, options).then((response) => {
-        window.location.reload(true);
+        window.location.href = response.url;
       });
     }
   </script>  

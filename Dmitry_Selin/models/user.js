@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
-let UserSchema = new Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -16,10 +16,9 @@ let UserSchema = new Schema({
   },
 });
 
-UserSchema.methods.checkPassword = function(password, cb) {
-  bcrypt.compare(password, this.passwordHash, (err, res) => {
-    cb(res ? true : false);
-  });
+UserSchema.methods.checkPassword = async function(password) {
+  const correct = await bcrypt.compare(password, this.passwordHash);
+  return correct;
 }
 
 module.exports = mongoose.model('User', UserSchema);
