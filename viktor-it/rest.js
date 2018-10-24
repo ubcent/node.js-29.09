@@ -70,8 +70,8 @@ app.post('/usersCreate', async (req, res) => {
   }
 });
 
-app.put('/users/:id', (req, res) => {
-  const user = User.findByIdAndUpdate(req.params.id, req.body);
+app.put('/users/:id', async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body);
   res.json(user);
 });
 
