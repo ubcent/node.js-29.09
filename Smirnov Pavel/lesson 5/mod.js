@@ -2,42 +2,73 @@ const mysql = require("mysql");
 
 class DB {
     constructor(){
-        this.connectionStatus = false;
-        this.connection = "";
+        this.pool = mysql.createPool({
+            connectionLimit : 10,
+            host     : 'localhost',
+            user     : 'root',
+            password : 'gfif1991',
+            database : 'todolist'
+        });
     }
-    start(){
-        if(!this.connectionStatus){
-            this.connection = mysql.createConnection({
-                host     : 'localhost',
-                user     : 'root',
-                password : 'gfif1991',
-                database : 'todolist'
-            });
-            this.connectionStatus = true;
-        }
-        this.connection.connect();
+    getUser(obj){
+        return new Promise((resolve, reject)=>{
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query('Select * from todolistauth where username = ? and password = ?', [obj.username, obj.password], (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
+            })
+        })
     }
     get(){
         return new Promise((resolve, reject)=>{
-            this.connection.query('SELECT * FROM todolist', (err, result, fuilds) =>{
-                resolve(result);
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query('Select * from todolist', (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
             })
         })
     }
     insert(data){
         return new Promise((resolve, reject)=>{
-            this.connection.query('INSERT INTO `todolist` (`post`) VALUES(?)', data, (err, result, fuilds)=>{
-                console.log(err);
-                console.log(result);
-                resolve(result);
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query('INSERT INTO `todolist` (`post`) VALUES(?)', data, (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
             })
         })
     }
-    end(){
-        if(this.connectionStatus){
-            this.connectionStatus = false;
-            this.connection.end();
-        }
+    update(data){
+        return new Promise((resolve, reject)=>{
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query('UPDATE `todolist` SET `post`=? WHERE id=?', [data.text, data.idPost], (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
+            })
+        })
+    }
+    delete(data){
+        return new Promise((resolve, reject)=>{
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query('DELETE FROM `todolist` WHERE id=?', data, (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
+            })
+        })
     }
 }
 module.exports = new DB;
