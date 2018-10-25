@@ -1,0 +1,110 @@
+<div id="main">
+    <input type="text" id="username" name="username">
+    <input type="text" id="password" name="password">
+    <button onClick = "authMe(this)">Войти</button>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+</script>
+<script>
+    let token ="";
+    function authMe(){
+        const authData = {username: $("#username").val(), password: $("#password").val()};
+        $.ajax({
+            method: "POST",
+            url: "/auth",
+            data: JSON.stringify(authData),
+            //Вот эта строчка отняла у меня кучу времени и заставила перерыть чуть ли не весь api jquery
+            //Интересно, кто-нибудь сталкивался с этой проблемой?
+            contentType : 'application/json',
+            dataType: "json",
+            success: (data)=>{
+                token = data.access_token;
+                $.ajax({
+                    method: "GET",
+                    url: "/",
+                    dataType: "json",
+                    beforeSend: (request)=> {
+                        request.setRequestHeader("authorization", token);
+                    },
+                    success: (data)=>{
+                        let newpage =`<div><input type="text" id="toDoAddText"><button onClick = "addData(this)">Добавить задание</button></div>
+                                     <div id="posts">`;
+                        data.forEach((element)=>{
+                            newpage = newpage + `<div idpost = ${element.id}>${element.post}  <button onClick = "changePost(this)">Изменить</button><button onClick = "deletePost(this)">Выполнено</button></div>`
+                        });
+                        newpage = newpage + `</div>`;
+                        $("#main").html(newpage);
+                    }
+                })
+            }
+        })
+    }
+    function addData(){
+        const textPost = {post: $("#toDoAddText").val()};
+        $.ajax({
+            method: "POST",
+            url: "/",
+            data: JSON.stringify(textPost),
+            //Вот эта строчка отняла у меня кучу времени и заставила перерыть чуть ли не весь api jquery
+            //Интересно, кто-нибудь сталкивался с этой проблемой?
+            contentType : 'application/json',
+            dataType: "json",
+            beforeSend: (request)=> {
+                request.setRequestHeader("authorization", token);
+            },
+            success: (data)=>{
+                $("#posts").append(`<div idpost=${data.id}>${textPost.post}<button onClick = "changePost(this)">Изменить</button>
+                                    <button onClick = "deletePost(this)">Выполнено</button></div>`);
+                $("#toDoAddText").val("");
+            }
+        })
+    }
+    //Чтобы тысячу раз не переписывать и не плодить функцию, сделаем эту универсальной
+    //Если передается command, делаем ajax
+    //Если command не передается, лепим инпут с данными из текста
+    function changePost(elem, command = 0){
+        if(!command){
+            //Используем function для сохранения контекста
+            const text = $(elem.parentNode).contents().filter(function(){
+                return this.nodeType === 3
+            }).text();
+            //Не обнуляем а именно обновляем соержимое элемента иначе он не обновится (обновится только при перезагрузке)
+            $(elem.parentNode).html(`<input type="text" value="${text}"><button onClick = "changePost(this, 1)">Изменить</button>`);
+        } else{
+            const newText = {text: $(elem.parentNode).children("input").val(), idPost: $(elem.parentNode).attr("idpost")};
+
+            $.ajax({
+                type: "PUT",
+                url: "/",
+                data: JSON.stringify(newText),
+                contentType : 'application/json',
+                beforeSend: (request)=> {
+                    request.setRequestHeader("authorization", token);
+                },
+                success: ()=>{
+                    $(elem.parentNode).html(`${newText.text}<button onClick = "changePost(this)">Изменить</button>
+                                            <button onClick = "deletePost(this)">Выполнено</button>`);
+                }
+            })
+        }
+    }
+    function deletePost(elem){
+        $.ajax({
+            type: "DELETE",
+            url: "/",
+            //Вот эта строчка отняла у меня кучу времени и заставила перерыть чуть ли не весь api jquery
+            //Интересно, кто-нибудь сталкивался с этой проблемой?
+            contentType : 'application/json',
+            data: JSON.stringify({id: $(elem.parentNode).attr("idpost")}),
+            beforeSend: (request)=> {
+                request.setRequestHeader("authorization", token);
+            },
+            success: ()=>{
+                $(elem.parentNode).remove();
+            }
+        })
+    }
+</script>
