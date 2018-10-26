@@ -37,18 +37,18 @@ class App extends Component {
     let message = {};    
     if(event.target.id === 'button-add-task') {
       message = {
-        action: 'newTask', 
+        action: Constants.Actions.NewTask, 
         name: this.state.newTaskName,
       };
       this.setState({newTaskName: ''});
     } else if(event.target.className === 'button-delete') {
       message = {
-        action: 'deleteTask', 
+        action: Constants.Actions.DeleteTask, 
         id: event.target.parentElement.getAttribute('id'),
       };
     } else if(event.target.className === 'button-done') {
       message = {
-        action: event.target.parentElement.getAttribute('done') === 'true' ? 'taskUndone' : 'taskDone',
+        action: event.target.parentElement.getAttribute('done') === 'true' ? Constants.Actions.TaskUndone : Constants.Actions.TaskDone,
         id: event.target.parentElement.getAttribute('id'),
       }
     } 
