@@ -4,12 +4,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
-const ServerAddress = 'http://localhost:3000';
-
-// state: tasks
-// send: action, task_info (name for new or id otherwise)
-// receive: tasks
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -21,13 +15,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`${ServerAddress}/todo`)
+    fetch('http://localhost:3000/todo')
     .then(response => response.json())
     .then(responseData => {
       this.setState({
         tasks: responseData,
       });
-      this.socket = io(ServerAddress);
+      this.socket = io('http://localhost:3000');
       this.socket.on('message', tasks => {
         this.setState(prevState => ({...prevState, tasks}));
       });
@@ -35,19 +29,37 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value);
     this.setState({newTaskName: event.target.value});
   }
-
-  handleAddTask = (event) => {
-    this.socket.emit('message', {action: 'newTask', name: this.state.newTaskName});
-    this.setState({newTaskName: ''});
+ 
+  handleButtonClick = (event) => {
+    let message = {};    
+    if(event.target.id === 'button-add-task') {
+      message = {
+        action: 'newTask', 
+        name: this.state.newTaskName,
+      };
+      this.setState({newTaskName: ''});
+    } else if(event.target.className === 'button-delete') {
+      message = {
+        action: 'deleteTask', 
+        id: event.target.parentElement.getAttribute('id'),
+      };
+    } else if(event.target.className === 'button-done') {
+      message = {
+        action: event.target.parentElement.getAttribute('done') === 'true' ? 'taskUndone' : 'taskDone',
+        id: event.target.parentElement.getAttribute('id'),
+      }
+    } 
+    this.socket.emit('message', message);
   }
 
   renderTask = (task) => {
-    return <div className="div-task" id={task._id}>
-      <button className="button-done">Сделано</button>
-      <button className="button-delete">Удалить</button>
+    const buttonDoneText = task.done ? 'Не сделано' : 'Сделано';
+    
+    return <div className="div-task" id={task._id} done={`${task.done}`}>
+      <button className="button-done" onClick={this.handleButtonClick}>{buttonDoneText}</button>
+      <button className="button-delete" onClick={this.handleButtonClick}>Удалить</button>
       <span className="span-task-name">{task.name}</span>
       <span className="span-task-created">Создано: {new Date(task.createdAt).toLocaleString()}</span>
       <span className="span-task-updated">Обновлено: {new Date(task.updatedAt).toLocaleString()}</span>
@@ -56,7 +68,6 @@ class App extends Component {
 
   render() {
     const {tasks, newTaskName} = this.state;
-    console.log(tasks);
 
     return (
       <div className="container">
@@ -64,7 +75,7 @@ class App extends Component {
           <div id="new-task">
             <h3>Добавить новую задачу</h3>
             <input id="text-task-name" onChange={this.handleChange} value={newTaskName} type="text" placeholder="Введите название"/>
-            <button id="button-add-task" onClick={this.handleAddTask}>Добавить</button>
+            <button id="button-add-task" onClick={this.handleButtonClick}>Добавить</button>
           </div>
         </div>
         <h4>Актуальные задачи</h4>

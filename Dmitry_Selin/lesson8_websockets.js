@@ -4,44 +4,33 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const IO = require('socket.io');
 const mongoose = require('mongoose');
-const consolidate = require('consolidate');
 
-const TodoList = require('./helpers/todolist')
-const User = require('./models/user');
+const Constants = require('./helpers/constants');
+const TodoList = require('./helpers/todolist');
 mongoose.connect('mongodb://localhost/todolist', { useNewUrlParser: true, useCreateIndex: true });
 
 const app = express();
 const server = http.Server(app);
 const io = IO(server);
 
-app.engine('hbs', consolidate.handlebars);
-app.set('view engine', 'hbs');
-app.set('views', path.resolve(__dirname, 'views'));
-
 app.use(bodyParser.json());
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  socket.on('message', async (message) => {
-    // receive: {action, taskInfo (name for new and id for old)}
-    // send: {task}
-    // message = {action, task_id}
-    // perform action on task by id with database
-    // broadcast message
-
-    if(message.action === 'newTask'){
+  socket.on(Constants.SocketMessageEvent, async (message) => {
+    if(message.action === Constants.Actions.NewTask){
       await TodoList.addTask(message.name);
-    } else if(message.action === 'deleteTask'){
+    } else if(message.action === Constants.Actions.DeleteTask){
       await TodoList.deleteTask(message.id);
-    } else if(message.action === 'taskDone'){
+    } else if(message.action === Constants.Actions.TaskDone){
       await TodoList.markTaskDone(message.id);
-    } else if(message.action === 'taskUndone'){
+    } else if(message.action === Constants.Actions.TaskUndone){
       await TodoList.markTaskUndone(message.id);
     }
     const tasks = await TodoList.getTasks();
 
-    socket.broadcast.emit('message', tasks);
-    socket.emit('message', tasks);
+    socket.broadcast.emit(Constants.SocketMessageEvent, tasks);
+    socket.emit(Constants.SocketMessageEvent, tasks);
   });
 
   socket.on('disconnect', () => {
@@ -53,8 +42,6 @@ app.get('/todo', async (req, res) => {
   const tasks = await TodoList.getTasks();
   res.json(tasks);
 });
-
-// app.use(express.static(path.resolve(__dirname, 'dist')));
 
 app.get('*', express.static(path.resolve(__dirname, 'dist')));
 
