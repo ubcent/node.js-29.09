@@ -1,4 +1,5 @@
 import './todolist.css';
+import Constants from '../helpers/constants';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -15,14 +16,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/todo')
+    fetch(`${Constants.ServerAddress}/${Constants.Routes.TodoList}`)
     .then(response => response.json())
     .then(responseData => {
       this.setState({
         tasks: responseData,
       });
-      this.socket = io('http://localhost:3000');
-      this.socket.on('message', tasks => {
+      this.socket = io(Constants.ServerAddress);
+      this.socket.on(Constants.SocketMessageEventName, tasks => {
         this.setState(prevState => ({...prevState, tasks}));
       });
     });
@@ -51,7 +52,7 @@ class App extends Component {
         id: event.target.parentElement.getAttribute('id'),
       }
     } 
-    this.socket.emit('message', message);
+    this.socket.emit(Constants.SocketMessageEventName, message);
   }
 
   renderTask = (task) => {

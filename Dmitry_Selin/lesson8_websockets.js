@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  socket.on(Constants.SocketMessageEvent, async (message) => {
+  socket.on(Constants.SocketMessageEventName, async (message) => {
     if(message.action === Constants.Actions.NewTask){
       await TodoList.addTask(message.name);
     } else if(message.action === Constants.Actions.DeleteTask){
@@ -29,8 +29,8 @@ io.on('connection', (socket) => {
     }
     const tasks = await TodoList.getTasks();
 
-    socket.broadcast.emit(Constants.SocketMessageEvent, tasks);
-    socket.emit(Constants.SocketMessageEvent, tasks);
+    socket.broadcast.emit(Constants.SocketMessageEventName, tasks);
+    socket.emit(Constants.SocketMessageEventName, tasks);
   });
 
   socket.on('disconnect', () => {
@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
   });
 });
 
-app.get('/todo', async (req, res) => {
+app.get(`/${Constants.Routes.TodoList}`, async (req, res) => {
   const tasks = await TodoList.getTasks();
   res.json(tasks);
 });
