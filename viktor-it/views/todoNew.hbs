@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ведение списка дел</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+	<h2 style="background-color: lightgrey; width:600px">Ведение списка дел</h2>
+	<div id="divTask" style="background-color: lightblue; width:600px"> Всего запланировано задач:
+		<div id="fromDB" style="background-color: lightgreen; width:600px">
+	    <table>
+	    	{{#each name_task}}
+	    	<tr>
+	    		<td>{{this.number}}</td>
+	    		<td>{{this.name}}</td>
+	    		<td>{{this.date}}</td>
+	    		<td>{{this.status}}</td>
+	    	</tr>
+	    	{{/each}}
+	    </table>
+		</div>
+	</div>
+	<br>
+	<br>
+	<h3>Поиск завершенных и не завершенных задач</h3>
+	<form action="/todo" method="POST">
+		<input type="text" name="status" placeholder="'завершена'">
+		<button>Поиск</button>
+	</form>
+	<br>
+	<table>
+		{{#each status}}
+		<tr>
+			<td>{{this.number}}</td>
+			<td>{{this.name}}</td>
+			<td>{{this.date}}</td>
+			<td>{{this.status}}</td>
+		</tr>
+		{{/each}}
+	</table>
+	<form action="/todo/not" method="POST">
+		<input type="text" name="status_not" placeholder="'не завершена'">
+		<button>Поиск</button>
+	</form>
+	<table>
+		{{#each status_not}}
+		<tr>
+			<td>{{this.number}}</td>
+			<td>{{this.name}}</td>
+			<td>{{this.date}}</td>
+			<td>{{this.status}}</td>
+		</tr>
+		{{/each}}
+	</table>
+</body>
+</html>
