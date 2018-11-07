@@ -1,0 +1,219 @@
+doctype html
+head
+    title ToDo
+    meta(charset='utf-8')
+    style.
+        body {
+            width: 50%;
+            margin: auto;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        form > * {
+            margin-left: 10px;
+        }
+
+        .todo-add {
+            margin: 10px;
+        }
+
+        .todo {
+            border: 1px solid;
+            margin: 10px;
+            padding: 10px;
+            min-width: 300px;
+            max-width: 300px;
+            float: left;
+        }
+
+        .todo input {
+            width: 100%;
+        }
+
+        .todo button {
+            margin-left: 10px;
+        }
+body
+    div(class="login")
+        form(id="formLogin" action="login", method="get")
+            label(id="label" style="display: none;") Text
+            input(id="login-input" type="text" placeholder="Login")
+            input(id="password-input" type="password" placeholder="Password")
+            input(id="sendLogin-input" type="submit" value="Войти")
+            input(id="sendLogout-input" type="submit" value="Выйти" style="display: none;")
+
+    div(class="todo-add")
+        form(id="formTodoAdd" action="todo-add", method="get")
+            label Добавить задачу
+            input(id="text-input" type="text" placeholder="Название задачи")
+            input(id="send-input" type="submit" value="Добавить")
+
+    div(class="todo-list")
+        each val, num in todolist
+            div(class="todo" id=val._id)
+                button(class="delete") Удалить
+                button(class="update") Обновить
+                p= (num + 1) + '.'
+                input(type="text" placeholder="Название задачи" value= val.name)
+                p(class="created")= val.created.toISOString()
+
+script(src="http://code.jquery.com/jquery-3.3.1.min.js")
+script(src="http://momentjs.com/downloads/moment-with-locales.min.js")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js")
+script.
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function setCookie(name, value, options) {
+        options = options || {};
+
+        let expires = options.expires;
+
+        if (typeof expires === 'number' && expires) {
+            let d = new Date();
+            d.setTime(d.getTime() + expires * 1000);
+            expires = options.expires = d;
+        }
+        if (expires && expires.toUTCString) {
+            options.expires = expires.toUTCString();
+        }
+
+        value = encodeURIComponent(value);
+
+        let updatedCookie = name + "=" + value;
+
+        for (let propName in options) {
+            updatedCookie += "; " + propName;
+            let propValue = options[propName];
+            if (propValue !== true) {
+                updatedCookie += "=" + propValue;
+            }
+        }
+        document.cookie = updatedCookie;
+    }
+
+    function deleteCookie(name) {
+        setCookie(name, '', {expires: -1});
+    }
+
+script.
+    const socket = io('http://localhost:3001');
+    
+script.
+    const href = `${window.location.protocol}//${window.location.host}/`;
+    moment.locale('ru');
+    $(async () => {
+
+        function readFromApi() {
+            $.ajax({url: '/api', async: false, method: 'get', success: data => {
+                let children = '';
+                    data.forEach((el, i) => {
+                        let child = `<div class="todo" id="${el._id}"><button class="delete">Удалить</button><button class="update">Обновить</button><p>${i + 1}.</p><input type="text" placeholder="Название задачи" value="${el.name}"><p class="created">${'Создано ' + moment(el.created).fromNow()}</p></div>`;
+                        children += child;
+                    });
+
+                    $('.todo-list').html(children);
+                }
+            }); 
+            eventify();
+        }
+
+        function eventify() {
+            $('.todo-list .todo').each((i, el) => {
+                const id = $(el).attr('id');
+                $(el).children('.delete').on('click', () => {
+                    $.post(href + 'delete', {_id: id});
+                    socket.emit('broadcast', JSON.parse(getCookie('login')).login);
+                    readFromApi();
+                });
+
+            $(el).children('.update').on('click', () => {
+                    const $input = $(el).children('input');
+                    const newName = $input.val();
+                    if (newName) {
+                        $.post(href + 'update', {name: newName, _id: id});
+                        socket.emit('broadcast', JSON.parse(getCookie('login')).login);
+                        readFromApi();
+                    }
+                });
+            });    
+        }
+
+        function timefy () {
+            $('.todo-list .todo .created').each((i, el) => {
+                const elDate = moment($(el).text());
+                $(el).text('Создано ' + moment(elDate).fromNow());
+            });  
+        }
+
+        const $login = $('#login-input');
+        const $label = $('#label');
+        const $password = $('#password-input');
+        const $sendLogin = $('#sendLogin-input');
+        const $sendLogout = $('#sendLogout-input');
+        let cookie = getCookie('login');
+
+        if (cookie) {
+            $label.text(JSON.parse(cookie).login);
+            $label.show();
+            $login.hide();
+            $password.hide();
+            $sendLogin.hide();
+            $sendLogout.show();
+        }
+
+        eventify();
+        timefy();
+
+        $('#formLogin').submit(e => {
+            e.preventDefault();
+        });
+
+        $('#formTodoAdd').submit(e => {
+            e.preventDefault();
+        });
+        
+
+        $('#send-input').on('click', () => {
+            const inputValue = $('#text-input').val();
+            if (inputValue) {
+                $.post(href + 'create', { name: inputValue });
+                socket.emit('broadcast', JSON.parse(getCookie('login')).login);
+                readFromApi();
+            }
+        });
+
+        $sendLogin.on('click', () => {
+            if ($login.val() && $password.val()) {
+                setCookie('login', JSON.stringify({ login: $login.val(), token: Math.random() }));
+                $label.text($login.val());
+                $label.show();
+                $login.hide();
+                $password.hide();
+                $sendLogin.hide();
+                $sendLogout.show();
+            } else {
+                alert('Логин или пароль пустые!')
+            }
+        });
+
+        $sendLogout.on('click', () => {
+            deleteCookie('login');
+            $label.hide();
+            $login.show();
+            $password.show();
+            $sendLogin.show();
+            $sendLogout.hide();
+        });
+
+        socket.on('broadcast', data => {
+            alert(`${data.author} изменил состояние ToDo Board`);
+            readFromApi();
+        });
+    });
+
