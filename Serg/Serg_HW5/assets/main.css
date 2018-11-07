@@ -1,0 +1,12 @@
+.complete {
+    text-decoration: line-through;
+}
+
+li {
+    cursor: pointer;
+    width: 300px;
+}
+
+li:hover{
+    outline: 1px solid coral;
+}

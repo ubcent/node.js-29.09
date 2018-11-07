@@ -1,0 +1,18 @@
+label
+  margin: 5px
+
+input
+  border: $panel-border
+  padding-left: 5px
+  background: #fff
+  +md-block()
+    width: 90%
+
+::placeholder
+  opacity: 0.5
+
+//input[type=tel],input[type=email]
+  &:invalid
+    border: 1px solid red
+  &:valid
+    border: 1px solid green

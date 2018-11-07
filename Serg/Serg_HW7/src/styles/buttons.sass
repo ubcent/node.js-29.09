@@ -1,0 +1,23 @@
+.button
+  width: 100px
+  padding: 5px
+  margin: 10px
+  border: 0
+  border-radius: 5px
+  cursor: pointer
+  background: $button-color
+  color: $button-text-color
+  transition: 0.2s
+  transition-delay: 0.2s
+  +box-shadow(1)
+
+  &:active
+    +box-shadow(2)
+
+  &:hover
+    opacity: 0.8
+    +box-shadow(2)
+
+  &:focus
+    outline: none
+    +box-shadow(2)

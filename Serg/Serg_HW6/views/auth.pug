@@ -1,0 +1,18 @@
+doctype html
+html(lang="ru")
+  head
+    title= title
+    link(rel="stylesheet" href="main.css")
+  body
+    h1= title
+    main
+      section
+        h2 Заполните форму
+        form#loginForm(action="/auth" method="post")
+          div
+            label(for="username") Логин
+            input#username(type="text" name="username" maxlength="8" required)
+          div
+            label(for="password") Пароль
+            input#password(type="password" name="password" maxlength="8" required)
+          button#submitButton(type="submit") Войти
