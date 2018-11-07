@@ -1,0 +1,39 @@
+<p>
+    TODO
+    ID: <%= user.id %><br/>
+    Username: <%= user.username %><br/>
+    Name: <%= user.displayName %><br/>
+    <% if (user.emails) { %>
+    Email: <%= user.emails[0].value %><br/>
+    <% } %>
+    </p>
+    <a href="/logout">Log out</a>
+
+    <form class="form-inline" action="/todo" method="POST">
+        <div class="form-group">
+            <label class="sr-only">Task name</label>
+            <p class="form-control-static" >Task name</p>
+        </div>
+        <div class="form-group mx-sm-3">
+            <label for="inputPassword2" class="sr-only">Task name</label>
+            <input type="text" name="taskName" class="form-control" id="inputPassword2" placeholder="Task name">
+        </div>
+        <button type="submit" class="btn btn-primary">Add task</button>
+    </form>
+    <% if (todo) { %>
+        <ul>
+            <% todo.forEach(function(todo){ %>
+                <li>
+                    <% if (!todo.isdone) { %>
+                    <a href='?id=<%= todo.id %>'><%= todo.name %> </a>
+                    <% }else{ %>
+                        <%= todo.name %>
+                    <% } %>
+                </li>
+            <% }); %>
+          </ul>      
+    <% } %>
+
+
+
+

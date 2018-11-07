@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <style>
+        li {list-style-type: none; /* Убираем маркеры */}
+  </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo list:</h1>
+        <form class="form-inline" action="/" method="POST">
+            <div class="form-group">
+                <label class="sr-only">Task name</label>
+                <p class="form-control-static" >Task name</p>
+            </div>
+            <div class="form-group mx-sm-3">
+                <label for="inputPassword2" class="sr-only">Task name</label>
+                <input type="text" name="taskName" class="form-control" id="inputPassword2" placeholder="Task name">
+            </div>
+            <button type="submit" class="btn btn-primary">Add task</button>
+        </form>
+        <ul>
+            {{#each todo}}
+            
+                <li> {{#if this.isdone}}
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <strike>
+                    {{else}}
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    <a href="?id={{this.id}}">
+                    {{/if}}
+                    {{this.name}}
+                    {{#if this.isdone}}
+                    </strike>
+                    {{else}}
+                    </a>
+                    {{/if}}
+                </li>
+            
+            {{/each}}
+        </ul>
+    </div>
+</body>
+
+</html>
