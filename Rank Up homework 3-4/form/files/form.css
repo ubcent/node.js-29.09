@@ -1,0 +1,16 @@
+#app-form {
+    margin: 0 auto 20px; 
+    width: 500px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+#app-form > select,#app-form > input {
+    margin-bottom: 20px;
+}
+#output {
+    width: 800px;
+    min-height: 50px;
+    margin: 0 auto;
+    border: 2px solid #000000;
+    white-space: pre-wrap;
+}
