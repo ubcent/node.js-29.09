@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+}
+
+.container{
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#header{
+  display: flex;
+}
+
+#new-task{
+  width: 70%;
+}
+
+#user-info{
+  width: 30%;
+  margin-top: 15px;
+  text-align: right;
+}
+
+#user-info span{
+  margin-right: 10px;
+}
+
+#text-task-name{
+  width: 500px;
+}
+
+.div-task{
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+}
+
+#div-tasks-undone .div-task{
+  background-color: aliceblue;
+}
+
+#div-tasks-done .div-task{
+  background-color: lightyellow;
+}
+
+.span-task-created, .span-task-updated, .span-task-name{
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  line-height: 17px;
+  font-variant: small-caps;
+}
+
+.span-task-updated{
+  margin-left: 5px;
+}
+
+.span-task-name{
+  margin-right: auto;
+  margin-left: 5px;
+  font-variant: normal;
+}
+
+.button-done, .button-delete{
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  font-variant: small-caps;
+  color: whitesmoke;
+}
+
+.button-done{
+  background-color: mediumaquamarine;
+}
+
+.button-delete{
+  margin-left: 5px;
+  background-color: darksalmon;
+}
